@@ -1,0 +1,4 @@
+# Ignore the following files and directoris
+venv/*
+.idea/*
+el/*
