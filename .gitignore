@@ -1,0 +1,6 @@
+# Ignore the following files and directoris
+venv/*
+.idea/*
+el/*
+__pycache__/*
+
