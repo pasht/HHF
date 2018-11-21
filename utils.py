@@ -2,6 +2,7 @@ import mimetypes
 import os
 import zipfile
 
+import docx
 import pandas as pd
 from pandas import ExcelFile
 
@@ -30,20 +31,43 @@ def dispatch(path, mtype):
         print('{0} is a {1}'.format(path, mtype))
         if 'spreadsheet' in mtype or 'ms-excel' in mtype:
             openExcelFile(path)
+        if 'word' in mtype:
+            opendocxfile(path)
     except:
         print('File : {0} has a mime type that is not supported !!!'.format(path))
 
     # print filename and file type
 
-def openExcelFile(data):
+def openexcelfile(data):
     '''
-        Read and/or process MS Excel file
-    :param data: excel file data or path to file to open it
+    Read and/or process MS Excel file
+    :param data: excel data or path to file to open it
     :return:
     '''
+
+
     if type(data) is str:
         df = pd.read_excel(data)
     else:
         df = ExcelFile(data)
 
     print(df.columns)
+
+
+def opendocxfile(data):
+    '''
+     Read and/or process MS Word files
+    :param: docx data or path to file to open it:
+    '''
+    doc = docx.Document(data)
+    text = []
+    for paragraph in doc.paragraphs:
+        text.append(paragraph.text)
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                text.append(cell.text)
+    # Now print the extracted text
+    print('\n'.join(text))
+
+
